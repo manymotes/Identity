@@ -20,8 +20,22 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
-	testCompile("junit:junit")
+
+	compileOnly 'org.projectlombok:lombok:1.18.10'
+	annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:5.9.0'
+	implementation 'com.graphql-java-kickstart:graphql-java-tools:5.6.0'
+	implementation 'com.graphql-java-kickstart:graphiql-spring-boot-starter:5.9.0'
+	implementation 'com.auth0:java-jwt:3.8.3'
+	implementation 'de.mkammerer:argon2-jvm:2.6'
+	implementation 'org.glassfish:javax.annotation:10.0-b28'
+	compile group: 'javax.inject', name: 'javax.inject', version: '1'
+//	compile group: 'com.graphql-java', name: 'graphql-java', version: '6.0-alpha1'
+
+	testCompile("junit:junit")
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

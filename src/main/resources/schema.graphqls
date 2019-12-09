@@ -1,7 +1,19 @@
 type Query {
-    getUserById(id: ID!): User
+    getUserById(id: ID!): UserResponse
 }
 
 type User {
+    uuid: ID!
+    password: String!
+    email: String!
     firstName: String!
+    lastName: String!
+}
+
+type UserResponse {
+uuid: ID!
+password: String!
+email: String!
+firstName: String!
+lastName: String!
 }

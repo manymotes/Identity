@@ -7,16 +7,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class UserResponse {
+
     private UUID uuid;
-    private String password;
     private String email;
     private String firstName;
     private String lastName;
-//    private UserStatus status;
 }

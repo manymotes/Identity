@@ -2,6 +2,11 @@ type Query {
     getUserById(id: ID!): UserResponse
 }
 
+type Mutation {
+    createUser(user: UserInput!): UserResponse!
+}
+#todo move create to mutations
+
 type User {
     uuid: ID!
     password: String!
@@ -11,9 +16,15 @@ type User {
 }
 
 type UserResponse {
-uuid: ID!
-password: String!
-email: String!
-firstName: String!
-lastName: String!
+    uuid: ID!
+    email: String!
+    firstName: String!
+    lastName: String!
+}
+
+input UserInput {
+    password: String!
+    email: String!
+    firstName: String!
+    lastName: String!
 }

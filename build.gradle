@@ -21,6 +21,7 @@ apply plugin: 'io.spring.dependency-management'
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile ('org.postgresql:postgresql')
 	compileOnly 'org.projectlombok:lombok:1.18.10'
 	annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
@@ -32,7 +33,6 @@ dependencies {
 	implementation 'de.mkammerer:argon2-jvm:2.6'
 	implementation 'org.glassfish:javax.annotation:10.0-b28'
 	compile group: 'javax.inject', name: 'javax.inject', version: '1'
-//	compile group: 'com.graphql-java', name: 'graphql-java', version: '6.0-alpha1'
 
 	testCompile("junit:junit")
 

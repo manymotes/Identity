@@ -9,9 +9,4 @@ public class IdentityApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IdentityApplication.class, args);
 	}
-
-//	@Bean
-//	public UserResolver query() {
-//		return new UserResolver();
-//	}
 }

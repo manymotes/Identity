@@ -4,8 +4,8 @@ type Query {
 
 type Mutation {
     createUser(user: UserInput!): UserResponse!
+    updateUser(user: UserUpdateInput!): UserResponse!
 }
-#todo move create to mutations
 
 type User {
     uuid: ID!
@@ -24,6 +24,13 @@ type UserResponse {
 
 input UserInput {
     password: String!
+    email: String!
+    firstName: String!
+    lastName: String!
+}
+
+input UserUpdateInput {
+    uuid: ID!
     email: String!
     firstName: String!
     lastName: String!

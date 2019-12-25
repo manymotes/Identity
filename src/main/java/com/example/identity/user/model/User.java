@@ -21,6 +21,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue
     private UUID uuid;
@@ -28,5 +29,7 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+    private int age;
+    private String gender;
 //    private UserStatus status;
 }

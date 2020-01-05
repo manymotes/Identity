@@ -1,6 +1,7 @@
 package com.example.identity.user;
 
 import java.util.Optional;
+import java.util.UUID;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -63,5 +64,9 @@ public class UserService {
             .build();
 
         return userResponse;
+    }
+
+    public void deleteUser(UUID userUuid) {
+        userRepository.deleteById(userUuid);
     }
 }

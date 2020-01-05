@@ -5,6 +5,7 @@ type Query {
 type Mutation {
     createUser(user: UserInput!): UserResponse!
     updateUser(user: UserUpdateInput!): UserResponse!
+    login(email: String!, password: String!): LoginResponse!
 }
 
 type User {
@@ -22,6 +23,11 @@ type UserResponse {
     lastName: String!
 }
 
+type LoginResponse {
+    authState: AuthState
+    userUuid: ID
+}
+
 input UserInput {
     password: String!
     email: String!
@@ -35,3 +41,11 @@ input UserUpdateInput {
     firstName: String!
     lastName: String!
 }
+
+enum AuthState {
+    NOT_AUTHENTICATED,
+    AUTHENTICATED
+}
+
+
+

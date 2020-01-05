@@ -2,17 +2,14 @@ package com.example.identity.authentication.model;
 
 public enum AuthState {
     NOT_AUTHENTICATED,
+    VALIDATE_EMAIL,
     FORCE_PASSWORD_CHANGE,
-    SETUP_MFA,
-    LOGIN_MFA,
+//    SETUP_MFA,
+//    LOGIN_MFA,
     AUTHENTICATED;
 
     public boolean isNotAuthenticated() {
         return this == NOT_AUTHENTICATED;
-    }
-
-    public boolean isLoginMfa() {
-        return this == LOGIN_MFA;
     }
 
     public boolean isAuthenticated() {

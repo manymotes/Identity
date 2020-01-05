@@ -6,10 +6,8 @@ import javax.inject.Named;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.example.identity.user.model.UserResponse;
-import org.springframework.stereotype.Component;
 
 @Named
-//@Component
 public class UserQueryResolver implements GraphQLQueryResolver {
 
     @Inject

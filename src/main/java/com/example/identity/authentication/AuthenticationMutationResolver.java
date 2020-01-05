@@ -15,11 +15,8 @@ import com.example.identity.authentication.model.LoginResponse;
 import com.example.identity.session.SessionService;
 import com.example.identity.session.model.Session;
 import com.example.identity.user.passwordService.JwtService;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
 @Named
-//@Component
 public class AuthenticationMutationResolver implements GraphQLMutationResolver {
 
     @Inject

@@ -1,9 +1,5 @@
 package com.example.identity.user.passwordService;
 
-import static javax.swing.UIManager.getString;
-
-import java.util.List;
-import java.util.UUID;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,16 +16,6 @@ public class PasswordService {
     private final static Pattern hasNumber = Pattern.compile("\\d");
     private final static Pattern hasSpecialChar = Pattern.compile("\\p{Punct}");
     private final static Argon2Types argon2Type = Argon2Types.ARGON2id;
-
-
-//    @Inject
-//    private PasswordProperties passwordProperties;
-
-    @Inject
-    private HttpServletRequest request;
-
-//    @Inject
-//    private PasswordHistoryRepository recentPasswordRepository;
 
     //todo make these values come from property file
     public String hashPassword(String password) {
@@ -94,7 +80,6 @@ public class PasswordService {
 //            throw validationException;
 //        }
     }
-
 
 //todo manage password history
 

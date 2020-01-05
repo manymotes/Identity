@@ -32,7 +32,7 @@ public class SessionService {
     private PasswordService passwordService;
 
     //this has to be changed from localhost"
-    private String domain = "localhost:8080";
+    private String domain = "identity.dev";
 
     public Session login(String email, String password) {
         var startTime = System.currentTimeMillis();
@@ -49,6 +49,7 @@ public class SessionService {
             //todo check user login attempts
 
             if (!passwordService.validatePasswords(user.getPassword(), password)) {
+
                 throw new LoginException(LoginExceptionType.INVALID);
             }
 

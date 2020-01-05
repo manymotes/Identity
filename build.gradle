@@ -50,6 +50,8 @@ dependencies {
 	compile group: 'javax.inject', name: 'javax.inject', version: '1'
 	compile group: 'com.graphql-java-kickstart', name: 'graphql-spring-boot-test-autoconfigure', version: '5.8.1'
 //
+
+	implementation('org.springframework.boot:spring-boot-starter-actuator')
 	compile 'com.graphql-java-kickstart:graphql-java-tools:5.6.0'
 
 	testCompile("junit:junit")

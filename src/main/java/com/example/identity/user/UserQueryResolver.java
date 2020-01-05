@@ -9,7 +9,7 @@ import com.example.identity.user.model.UserResponse;
 import org.springframework.stereotype.Component;
 
 @Named
-@Component
+//@Component
 public class UserQueryResolver implements GraphQLQueryResolver {
 
     @Inject

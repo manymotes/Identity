@@ -20,39 +20,21 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies {
 
-//	compile 'com.graphql-java-kickstart:graphql-spring-boot-starter:6.0.0'
-//
-//	// to embed Altair tool
-//	runtime 'com.graphql-java-kickstart:altair-spring-boot-starter:6.0.0'
-//
-//	// to embed GraphiQL tool
-//	runtime 'com.graphql-java-kickstart:graphiql-spring-boot-starter:6.0.0'
-//
-//	// to embed Voyager tool
-//	runtime 'com.graphql-java-kickstart:voyager-spring-boot-starter:6.0.0'
-//
-//	// testing facilities
-//	testCompile 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:6.0.0'
-
 	compile("org.springframework.boot:spring-boot-starter-web")
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile ('org.postgresql:postgresql')
+	compile group: 'javax.inject', name: 'javax.inject', version: '1'
+	compile group: 'com.graphql-java-kickstart', name: 'graphql-spring-boot-test-autoconfigure', version: '5.8.1'
+	compile 'com.graphql-java-kickstart:graphql-java-tools:5.6.0'
 	compileOnly 'org.projectlombok:lombok:1.18.10'
+
 	annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
 	implementation 'org.springframework.boot:spring-boot-starter'
-//	implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:5.9.0'
-//	implementation 'com.graphql-java-kickstart:graphql-java-tools:5.6.0'
-//	implementation 'com.graphql-java-kickstart:graphiql-spring-boot-starter:5.9.0'
 	implementation 'com.auth0:java-jwt:3.8.3'
 	implementation 'de.mkammerer:argon2-jvm:2.6'
 	implementation 'org.glassfish:javax.annotation:10.0-b28'
-	compile group: 'javax.inject', name: 'javax.inject', version: '1'
-	compile group: 'com.graphql-java-kickstart', name: 'graphql-spring-boot-test-autoconfigure', version: '5.8.1'
-//
 
-	implementation('org.springframework.boot:spring-boot-starter-actuator')
-	compile 'com.graphql-java-kickstart:graphql-java-tools:5.6.0'
 
 	testCompile("junit:junit")
 

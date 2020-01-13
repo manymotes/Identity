@@ -29,7 +29,6 @@ public class UserServiceTest {
     @Inject
     private UserRepository userRepository;
 
-
     @Test
     public void testCreateUer() {
 
@@ -39,16 +38,13 @@ public class UserServiceTest {
             .firstName(FIRST_NAME)
             .lastName(LAST_NAME)
             .password(PASSWORD)
-            .uuid(USER_UUID)
             .gender(GENDER)
             .build();
 
         User user = userRepository.save(userToSave);
-
         user.setUuid(userToSave.getUuid());
 
         assertThat(user).isEqualTo(userToSave);
     }
-
 
 }

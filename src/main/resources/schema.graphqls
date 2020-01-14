@@ -6,6 +6,11 @@ type Mutation {
     createUser(user: UserInput!): UserResponse!
     updateUser(user: UserUpdateInput!): UserResponse!
     login(email: String!, password: String!): LoginResponse!
+    logout: Result
+}
+
+type Result {
+    success: Boolean!
 }
 
 type User {

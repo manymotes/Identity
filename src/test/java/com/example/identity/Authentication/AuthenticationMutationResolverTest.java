@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 
 import com.example.identity.GraphQLResponse;
 import com.example.identity.GraphQLTestHelper;
@@ -17,6 +18,7 @@ import com.example.identity.session.model.Session;
 import com.example.identity.session.repository.SessionRepository;
 import com.example.identity.user.UserService;
 import com.example.identity.user.model.User;
+import com.example.identity.user.passwordService.JwtService;
 import com.example.identity.user.passwordService.PasswordService;
 import com.example.identity.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,6 +62,9 @@ public class AuthenticationMutationResolverTest {
     @Inject
     private GraphQLTestHelper graphQLTestHelper;
 
+    @Inject
+    private JwtService jwtService;
+
     @BeforeEach
     public void setup() {
     }
@@ -69,7 +74,7 @@ public class AuthenticationMutationResolverTest {
     }
 
     @Test
-    public void loginTest() throws Exception {
+    public void loginLogoutTest() throws Exception {
 
         User user = User.builder()
             .password(passwordService.hashPassword(PASSWORD))
@@ -100,12 +105,29 @@ public class AuthenticationMutationResolverTest {
         postResult.isOk();
         assertThat(postResult.getRawResponse().getBody())
             .isEqualTo("{\"data\":{\"login\":{\"authState\":\"AUTHENTICATED\",\"userUuid\":\"" + USER_UUID + "\"}}}");
+
+        when(sessionRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(session));
+        postResult = graphQLTestHelper.perform(LOGOUT_QUERY, null, SESSION_UUID);
+
+        assertThat(postResult.getRawResponse().getBody()).isEqualTo("{\"data\":{\"logout\":{\"success\":true}}}");
+    }
+
+    private Cookie createSession(String email, String password) {
+        Session session = sessionService.login(email, password);
+        String jwt = jwtService.buildToken(session.getUuid(), session.getUserUuid(), session.getCreatedAt(), session.getExpiration());
+        return new Cookie(AUTH_COOKIE, jwt);
     }
 
     private static final String LOGIN_QUERY = "mutation Login($email: String!, $password: String!) {" +
         " login(email: $email, password: $password) {" +
         "    authState" +
         "    userUuid" +
+        "  }" +
+        "}";
+
+    private static final String LOGOUT_QUERY = "mutation Logout {" +
+        " logout {" +
+        "    success" +
         "  }" +
         "}";
 

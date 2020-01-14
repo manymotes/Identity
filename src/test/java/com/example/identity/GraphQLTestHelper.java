@@ -1,6 +1,7 @@
 package com.example.identity;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.inject.Named;
 
@@ -31,6 +32,12 @@ public class GraphQLTestHelper {
         return post(payload);
     }
 
+    public GraphQLResponse perform(String graphqlQuery, ObjectNode variables, UUID sessionUuid) throws IOException {
+
+        String payload = createJsonQuery(graphqlQuery, variables);
+        return post(payload, sessionUuid);
+    }
+
     private String createJsonQuery(String graphql, ObjectNode variables)
         throws JsonProcessingException {
 
@@ -44,6 +51,10 @@ public class GraphQLTestHelper {
         return postRequest(forJson(payload, headers));
     }
 
+    private GraphQLResponse post(String payload, UUID sessionUuid) {
+        return postRequest(forJson(payload, headers, sessionUuid));
+    }
+
     private GraphQLResponse postRequest(HttpEntity<Object> request) {
         ResponseEntity<String> response = restTemplate.exchange("/graphql", HttpMethod.POST, request, String.class);
         return new GraphQLResponse(response);
@@ -51,6 +62,13 @@ public class GraphQLTestHelper {
 
     static HttpEntity<Object> forJson(String json, HttpHeaders headers) {
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        return new HttpEntity<>(json, headers);
+    }
+
+
+    static HttpEntity<Object> forJson(String json, HttpHeaders headers, UUID sessionUuid) {
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.add("Cookie", "JSESSIONID=" + sessionUuid);
         return new HttpEntity<>(json, headers);
     }
 }

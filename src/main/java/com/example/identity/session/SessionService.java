@@ -96,4 +96,17 @@ public class SessionService {
             .build()
             .toString();
     }
+
+    public void logout(UUID sessionUuid) {
+        Session toUpdate = getSessionOrThrowException(sessionUuid);
+        toUpdate.setExpiration(Instant.now());
+        sessionRepository.save(toUpdate);
+    }
+
+    public Session getSessionOrThrowException(UUID uuid) {
+        if (uuid == null) {
+            throw new RuntimeException("could not find session");
+        }
+        return sessionRepository.findById(uuid).orElseThrow(RuntimeException::new);
+    }
 }

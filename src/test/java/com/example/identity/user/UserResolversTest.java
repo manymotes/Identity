@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.UUID;
 import javax.inject.Inject;
 
@@ -19,7 +18,6 @@ import com.example.identity.user.model.User;
 import com.example.identity.user.model.UserInput;
 import com.example.identity.user.passwordService.PasswordService;
 import com.example.identity.user.repository.UserRepository;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.graphql.spring.boot.test.GraphQLTest;
@@ -81,14 +79,11 @@ public class UserResolversTest extends GraphQLTestHelper {
             .password(PASSWORD)
             .build();
 
-
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode vars = mapper.valueToTree(userInput);
         ObjectNode variables = mapper.createObjectNode();
 
         variables.put("user", vars);
-
 
         GraphQLResponse postResult = perform(CREATE_USER_QUERY, variables);
 
@@ -97,7 +92,10 @@ public class UserResolversTest extends GraphQLTestHelper {
 
         JSONObject object = (JSONObject) new JSONParser().parse(postResult.getRawResponse().getBody());
         JSONObject data = (JSONObject) object.get("data");
-        JSONObject userJson = (JSONObject) object.get("user");
+        JSONObject userJson = (JSONObject) data.get("createUser");
+        assertThat(userJson.get("firstName")).isEqualTo(FIRST_NAME);
+        assertThat(userJson.get("lastName")).isEqualTo(LAST_NAME);
+        assertThat(userJson.get("email")).isEqualTo(EMAIL);
     }
 
     private static final String CREATE_USER_QUERY = "mutation CreateUser($user: UserInput!) {" +

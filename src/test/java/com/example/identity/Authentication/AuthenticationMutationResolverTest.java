@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
 
 import com.example.identity.GraphQLResponse;
 import com.example.identity.GraphQLTestHelper;
@@ -30,10 +30,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
-
 @ContextConfiguration(classes = IdentityApplication.class)
 @GraphQLTest
-public class AuthenticationMutationResolverTest {
+public class AuthenticationMutationResolverTest extends GraphQLTestHelper {
 
     private static final String EMAIL = "email@gmail.com";
     private static final String FIRST_NAME = "Steve";
@@ -58,9 +57,6 @@ public class AuthenticationMutationResolverTest {
 
     @Inject
     private PasswordService passwordService;
-
-    @Inject
-    private GraphQLTestHelper graphQLTestHelper;
 
     @Inject
     private JwtService jwtService;
@@ -100,23 +96,30 @@ public class AuthenticationMutationResolverTest {
         variables.put("email", EMAIL);
         variables.put("password", PASSWORD);
 
-        GraphQLResponse postResult = graphQLTestHelper.perform(LOGIN_QUERY, variables);
+        GraphQLResponse postResult = perform(LOGIN_QUERY, variables);
 
         postResult.isOk();
         assertThat(postResult.getRawResponse().getBody())
             .isEqualTo("{\"data\":{\"login\":{\"authState\":\"AUTHENTICATED\",\"userUuid\":\"" + USER_UUID + "\"}}}");
+    }
+
+    @Test
+    public void logoutTest() throws IOException {
+
+        Session session = Session.builder()
+            .createdAt(Instant.now())
+            .expiration(Instant.now().plus(15, ChronoUnit.MINUTES))
+            .userUuid(USER_UUID)
+            .uuid(SESSION_UUID)
+            .build();
 
         when(sessionRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(session));
-        postResult = graphQLTestHelper.perform(LOGOUT_QUERY, null, SESSION_UUID);
+        GraphQLResponse postResult = perform(LOGOUT_QUERY, null, SESSION_UUID);
 
         assertThat(postResult.getRawResponse().getBody()).isEqualTo("{\"data\":{\"logout\":{\"success\":true}}}");
+
     }
 
-    private Cookie createSession(String email, String password) {
-        Session session = sessionService.login(email, password);
-        String jwt = jwtService.buildToken(session.getUuid(), session.getUserUuid(), session.getCreatedAt(), session.getExpiration());
-        return new Cookie(AUTH_COOKIE, jwt);
-    }
 
     private static final String LOGIN_QUERY = "mutation Login($email: String!, $password: String!) {" +
         " login(email: $email, password: $password) {" +

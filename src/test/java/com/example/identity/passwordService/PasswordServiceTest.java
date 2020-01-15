@@ -18,7 +18,6 @@ public class PasswordServiceTest {
 
     @Test
     public void testHashPassword() {
-
         String hash = passwordService.hashPassword(PASSWORD);
         assertThat(hash.startsWith("$argon2id$")).isEqualTo(true);
         assertThat(passwordService.validatePasswords(hash, PASSWORD)).isEqualTo(true);

@@ -57,6 +57,8 @@ public class GraphQLTestHelper {
 
     private GraphQLResponse postRequest(HttpEntity<Object> request) {
         ResponseEntity<String> response = restTemplate.exchange("/graphql", HttpMethod.POST, request, String.class);
+        System.out.println(request);
+        System.out.println(response);
         return new GraphQLResponse(response);
     }
 

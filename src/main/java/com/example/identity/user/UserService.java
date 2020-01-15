@@ -11,6 +11,7 @@ import com.example.identity.user.model.UserResponse;
 import com.example.identity.user.model.UserUpdateInput;
 import com.example.identity.user.passwordService.PasswordService;
 import com.example.identity.user.repository.UserRepository;
+import com.example.identity.util.exceptions.NotFoundException;
 
 @Named
 public class UserService {
@@ -45,7 +46,9 @@ public class UserService {
     public UserResponse updateUser(UserUpdateInput userUpdateInput) {
 
         Optional<User> user = userRepository.findById(userUpdateInput.getUuid());
-        if (user == null) {
+        if (user.isEmpty()) {
+//            todo graphql exceptions
+//            throw new NotFoundException();
             return null;
         }
         User userToSave = user.get();

@@ -38,6 +38,8 @@ input UserInput {
     email: String!
     firstName: String!
     lastName: String!
+    age: Int!
+    gender: String!
 }
 
 input UserUpdateInput {

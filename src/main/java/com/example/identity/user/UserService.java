@@ -29,6 +29,8 @@ public class UserService {
             .firstName(userInput.getFirstName())
             .lastName(userInput.getLastName())
             .password(passwordService.hashPassword(userInput.getPassword()))
+            .age(userInput.getAge())
+            .gender(userInput.getGender())
             .build();
 
         user = userRepository.save(user);

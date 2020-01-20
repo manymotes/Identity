@@ -1,4 +1,4 @@
-package com.example.identity.user;
+package com.example.identity.users;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +16,7 @@ import com.example.identity.GraphQLTestHelper;
 import com.example.identity.IdentityApplication;
 import com.example.identity.session.SessionService;
 import com.example.identity.session.repository.SessionRepository;
+import com.example.identity.user.UserService;
 import com.example.identity.user.model.User;
 import com.example.identity.user.model.UserInput;
 import com.example.identity.user.model.UserUpdateInput;
@@ -59,6 +60,7 @@ public class UserResolversTest extends GraphQLTestHelper {
     private static final UUID USER_UUID = UUID.randomUUID();
     private static final String GENDER = "male";
     private static final UUID SESSION_UUID = UUID.randomUUID();
+    private static final int AGE = 25;
 
     @Test
     public void createUserTest() throws IOException, JSONException, ParseException {
@@ -80,6 +82,8 @@ public class UserResolversTest extends GraphQLTestHelper {
             .firstName(FIRST_NAME)
             .lastName(LAST_NAME)
             .password(PASSWORD)
+            .age(AGE)
+            .gender(GENDER)
             .build();
 
         ObjectMapper mapper = new ObjectMapper();

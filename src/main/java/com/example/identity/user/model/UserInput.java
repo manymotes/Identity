@@ -14,4 +14,7 @@ public class UserInput {
     private String email;
     private String firstName;
     private String lastName;
+    private int age;
+    private String gender;
+
 }

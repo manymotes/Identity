@@ -31,6 +31,7 @@ type UserResponse {
 type LoginResponse {
     authState: AuthState
     userUuid: ID
+    jwt: String
 }
 
 input UserInput {

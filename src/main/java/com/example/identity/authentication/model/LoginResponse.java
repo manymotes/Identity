@@ -15,4 +15,5 @@ public class LoginResponse {
     //    private List<Feature> features;
     private AuthState authState;
     private UUID userUuid;
+    private String jwt;
 }

@@ -45,6 +45,8 @@ public class AuthenticationMutationResolver implements GraphQLMutationResolver {
     public LoginResponse login(String email, String password) {
         Session session = sessionService.login(email, password);
 
+        String sessionId = request.getRequestedSessionId();
+        String jwtHeader = request.getHeader("Set-Cookie");
         String jwt = jwtService.buildToken(session.getUuid(), session.getUserUuid(), session.getCreatedAt(), session.getExpiration());
         Duration maxAge = Duration.of(session.getExpiration().toEpochMilli() - session.getCreatedAt().toEpochMilli(), ChronoUnit.MILLIS);
         String cookie = sessionService.createAuthCookie(jwt, maxAge, request.isSecure());
@@ -54,6 +56,7 @@ public class AuthenticationMutationResolver implements GraphQLMutationResolver {
         return LoginResponse.builder()
             .authState(AuthState.AUTHENTICATED)
             .userUuid(session.getUserUuid())
+            .jwt(jwt)
             .build();
     }
 
